@@ -79,7 +79,7 @@ exports.getEntryPages = function () {
 }
 
 exports.htmlPlugins = function (webackConfig) {
-    var exChunks = config.isBuild ? ['manifest', 'vendor'] : [];
+    var exChunks = config.isBuild ? ['vendor'] : [];
     var list = Object.keys(webackConfig.entry).map(baseName => {
         return htmlPlugin({
             filename: baseName + '.html',

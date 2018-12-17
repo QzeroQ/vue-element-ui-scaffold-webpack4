@@ -10,17 +10,7 @@
   ],
   "plugins": [
     "transform-runtime",
-    "transform-vue-jsx",
-    [
-      "component",
-      [
-        {
-          "libraryName": "element-ui",
-          "styleLibraryName": "~node_modules/element-theme-chalk/src",
-          "ext": ".scss"
-        }
-      ]
-    ]
+    "transform-vue-jsx"
   ],
   "comments": false,
   "env": {

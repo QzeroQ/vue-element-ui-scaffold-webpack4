@@ -13,14 +13,20 @@ var webpackConfig = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({
             sourceMap: config.build.productionSourceMap,
-            extract: true
+            extract: false
         })
     },
     devtool: config.build.productionSourceMap ? '#eval-source-map' : false,
     output: {
         path: config.build.assetsRoot,
         filename: utils.assetsPath('js/[name].[chunkhash].js'),
-        chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+        chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
+        libraryTarget: 'umd',
+        library: 'WidgetFootCode',
+    },
+    externals: {
+        'vue':'Vue',
+        'element-ui': 'ELEMENT'
     },
     plugins: [
         // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -28,12 +34,12 @@ var webpackConfig = merge(baseWebpackConfig, {
             'process.env': config.build.env
         }),
         // extract css into its own file
-        new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: 'css/[name].css',
-            chunkFilename: 'css/[id].css'
-        }),
+        // new MiniCssExtractPlugin({
+        //     // Options similar to the same options in webpackOptions.output
+        //     // both options are optional
+        //     filename: 'css/[name].css',
+        //     chunkFilename: 'css/[id].css'
+        // }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
         ...(config.build.productionSourceMap
@@ -45,20 +51,10 @@ var webpackConfig = merge(baseWebpackConfig, {
                     }
                 })]
         ),
-        ...utils.htmlPlugins(baseWebpackConfig),
-        // copy custom static assets
-        new CopyWebpackPlugin([
-            {
-                from: path.resolve(__dirname, '../static'),
-                to: config.build.assetsSubDirectory,
-                ignore: ['.*']
-            }
-        ])
+
     ],
     optimization: {
-        runtimeChunk: {
-            name: 'manifest'
-        },
+        runtimeChunk: false,
         minimize: true,
         noEmitOnErrors: true,
         splitChunks: {

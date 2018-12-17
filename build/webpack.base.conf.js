@@ -10,7 +10,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-    entry: utils.getEntryPages(),
+    entry: './src/index.js',
     output: {
         path: config.build.assetsRoot,
         filename: '[name].js',
@@ -59,7 +59,6 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
                     name: utils.assetsPath('img/[name].[hash:7].[ext]')
                 }
             },
@@ -67,27 +66,13 @@ module.exports = {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
                     name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
                 }
             }
         ]
     },
     plugins: [
-        new VueLoaderPlugin(),
-        //生成仅包含颜色的替换样式（主题色等）
-        new ThemeColorReplacer({
-            fileName: appConfig.themeFile,
-            matchColors: [
-                ...ThemeColorReplacer.getElementUISeries(appConfig.themeColor),  //element-ui主色系列
-                '#0cdd3a',  //自定义颜色
-                '#c655dd',
-            ],
-            cssPrefix: true,
-            // resolveCss(resultCss) { // optional. Resolve result css code as you wish.
-            //     return resultCss + youCssCode
-            // }
-        })
+        new VueLoaderPlugin()
     ],
 
     node: {
